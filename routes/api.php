@@ -4,6 +4,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\CompanyController;
 use App\Http\Controllers\API\ProductController;
+use App\Http\Controllers\API\OfficerController;
+use App\Http\Controllers\API\DepartmentController;
 use App\Http\Controllers\API\BoraController;
 /*
 |--------------------------------------------------------------------------
@@ -44,6 +46,8 @@ Route::get('/staff/{id}', [CompanyController::class, 'show']);
 
 Route::apiResource('/product', ProductController::class);
 
+Route::apiResource('/department', DepartmentController::class);
+Route::apiResource('/officer', OfficerController::class);
 
 //http://localhost/laravel8/public/api/bora
 Route::apiResource('/bora', BoraController::class);
