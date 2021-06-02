@@ -4,7 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\CompanyController;
 use App\Http\Controllers\API\ProductController;
-
+use App\Http\Controllers\API\BoraController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -43,3 +43,9 @@ Route::get('/staff', function () {
 Route::get('/staff/{id}', [CompanyController::class, 'show']);
 
 Route::apiResource('/product', ProductController::class);
+
+
+//http://localhost/laravel8/public/api/bora
+Route::apiResource('/bora', BoraController::class);
+Route::post('/bora/authen1', [BoraController::class, 'authen1']);
+Route::post('/bora/authen2', [BoraController::class, 'authen2']);
