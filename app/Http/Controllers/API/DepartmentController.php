@@ -20,10 +20,45 @@ class DepartmentController extends Controller
         // $d = Department::find(2);
         //$d = Department::where('name', 'like', '%e%')->get();
         //$d = Department::select('id', 'name')->orderBy('id', 'desc')->get();
-        $d = DB::select('select id,name from departments order by id desc');
+        //$d = DB::select('select id,name from departments order by id desc');
 
-        $total = Department::count();
-        // return response()->json($d, 200);
+        // $total = Department::count();
+        // // return response()->json($d, 200);
+        // return response()->json(
+        //     [
+        //         'total' => $total,
+        //         'data' => $d
+        //     ],
+        //     200
+        // );
+
+
+        //pagination;
+        //{{url}}/department?page=1&page_size=5
+
+        $page_size = request()->query('page_size');
+        $pageSize = $page_size == null ? 5 : $page_size;
+        // $d = Department::paginate($pageSize);
+
+        //relationship
+        $d = Department::orderBy('id', 'desc')->with(['officers'])->get();
+
+        $d = Department::orderBy('id', 'desc')->with(['officers'])->paginate($pageSize);
+
+        $d = Department::orderBy('id', 'desc')->with(['officers' => function ($query) {
+            $query->orderBy('salary', 'desc');
+        }])->paginate($pageSize);
+
+        return response()->json($d, 200);
+    }
+
+    //api/search/department?name=A
+    public function search()
+    {
+        $query = request()->query('name');
+        $keyword = '%' . $query . '%';
+        $d = Department::where('name', 'like', $keyword)->get();
+        $total = $d->count();
         return response()->json(
             [
                 'total' => $total,
@@ -32,7 +67,6 @@ class DepartmentController extends Controller
             200
         );
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -70,6 +104,8 @@ class DepartmentController extends Controller
         return response()->json($d, 200);
     }
 
+
+
     /**
      * Update the specified resource in storage.
      *
@@ -77,9 +113,34 @@ class DepartmentController extends Controller
      * @param  \App\Models\Department  $department
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Department $department)
+
+    public function update(Request $request, $id)
     {
-        //
+        if ($request->id != $id) {
+            return response()->json([
+                "errors" => [
+                    "status_code" => 400,
+                    "message" => "ID not match"
+                ]
+            ], 400);
+        }
+
+        $d = Department::find($id);
+        if ($d == null) {
+            return response()->json([
+                "errors" => [
+                    "status_code" => 404,
+                    "message" => "No data found"
+                ]
+            ], 404);
+        }
+
+        $d->name = $request->name;
+        $d->save();
+        return response()->json([
+            'message' => 'Update OK',
+            'data' => $d
+        ], 201);
     }
 
     /**

@@ -13,4 +13,11 @@ class Department extends Model
     // protected $keyType = 'string'; // in case primary is varchar (not bigint)
     // public $incrementing = false; // pk is not auto_increment
     // public $timestamps = false; // not cloumn created_at / updated_at in the table 
+
+    // one to many relationship
+    // relation name
+    public function officers()
+    {
+        return $this->hasMany(Officer::class, 'department_id', 'id');
+    }
 }

@@ -53,3 +53,8 @@ Route::apiResource('/officer', OfficerController::class);
 Route::apiResource('/bora', BoraController::class);
 Route::post('/bora/authen1', [BoraController::class, 'authen1']);
 Route::post('/bora/authen2', [BoraController::class, 'authen2']);
+
+
+// Find by department name
+//api/search/department?name=A
+Route::get('/search/department', [DepartmentController::class, 'search']);
