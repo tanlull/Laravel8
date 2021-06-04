@@ -7,6 +7,7 @@ use App\Http\Controllers\API\ProductController;
 use App\Http\Controllers\API\OfficerController;
 use App\Http\Controllers\API\DepartmentController;
 use App\Http\Controllers\API\BoraController;
+use App\Http\Controllers\API\AuthController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -57,4 +58,13 @@ Route::post('/bora/authen2', [BoraController::class, 'authen2']);
 
 // Find by department name
 //api/search/department?name=A
-Route::get('/search/department', [DepartmentController::class, 'search']);
+Route::get('/search/department', [DepartmentController::class, 'search'])->middleware('auth::sanctum');
+
+
+// Authenticate
+Route::post('/auth/register', [AuthController::class, 'register']);
+Route::post('/auth/login', [AuthController::class, 'login']);
+Route::post('/auth/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
+
+// get profile
+Route::get('/auth/profile', [AuthController::class, 'profile'])->middleware('auth:sanctum');

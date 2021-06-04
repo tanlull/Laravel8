@@ -11,7 +11,7 @@ class Officer extends Model
     protected $table = 'officers';
 
     // Add getter to json data
-    protected $appends = ['fullname', 'age'];
+    protected $appends = ['fullname', 'age', 'picture_url'];
 
     //getter (Accessor)
     public function getfullnameAttribute()
@@ -24,6 +24,11 @@ class Officer extends Model
         return now()->diffInYears($this->dob);
     }
 
+    public function getPictureUrlAttribute() // picture_url
+    {
+        //  return  $this->picture;
+        return asset('storage/upload') . '/' . $this->picture;
+    }
 
     //many to one relationship
     public function department()
