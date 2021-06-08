@@ -43,9 +43,10 @@ class BoraController extends Controller
     public function authen1(Request $request)
     {
         $data = [
-            'pid' => $request->input('pid'),
-            'cid' => $request->input('cid'),
+            //'pid' => $request->input('pid'),
+            //'cid' => $request->input('cid'),
             //'time' => config("app.timezone"),
+            'messages' => '0000',
             'xkey' => env('XKEY', 'xxxxxxxx'),
 
         ];
@@ -55,7 +56,7 @@ class BoraController extends Controller
     public function authen2(Request $request)
     {
         $data = [
-            'message' => '0000',
+            'messages' => '0000',
             'tkey' => env('TKEY', "ttttttttttttttttttttttttttttttttttt"),
 
         ];
