@@ -8,6 +8,8 @@ use App\Http\Controllers\API\OfficerController;
 use App\Http\Controllers\API\DepartmentController;
 use App\Http\Controllers\API\BoraController;
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\ETDAController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -68,3 +70,7 @@ Route::post('/auth/logout', [AuthController::class, 'logout'])->middleware('auth
 
 // get profile
 Route::get('/auth/profile', [AuthController::class, 'profile'])->middleware('auth:sanctum');
+
+//http://localhost/laravel8/public/api/etda
+// ETDAController
+Route::get('/etda', [ETDAController::class, 'upload']);
